@@ -1,0 +1,5 @@
+dotenv
+langchain>=1.0.0a4
+langchain_google_community
+langchain-openai
+urllib3
