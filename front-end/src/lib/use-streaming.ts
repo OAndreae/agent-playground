@@ -57,11 +57,6 @@ export function useStreaming(sessionId: string | null): UseStreamingResult {
           eventSource.close();
         }
 
-        if (streamEvent.complete) {
-          setIsStreaming(false);
-          setIsComplete(true);
-          eventSource.close();
-        }
       } catch (err) {
         console.error('Error parsing stream event:', err);
         setError('Failed to parse stream event');
