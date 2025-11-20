@@ -1,7 +1,7 @@
-import { useFiresideChatStore } from '@/store/firesideChatStore';
+import { FileText, Loader2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { FileText, Loader2 } from 'lucide-react';
+import { useFiresideChatStore } from '@/store/firesideChatStore';
 
 export function PreparationNotesDisplay() {
   const { preparationNotes, isGenerating } = useFiresideChatStore();

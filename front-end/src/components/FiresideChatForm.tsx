@@ -1,11 +1,11 @@
+import { AlertCircle, RotateCcw, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import { useFiresideChatStore } from '@/store/firesideChatStore';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle, Sparkles, RotateCcw } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useFiresideChatStore } from '@/store/firesideChatStore';
 
 export function FiresideChatForm() {
   const {
