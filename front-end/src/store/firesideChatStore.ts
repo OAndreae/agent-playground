@@ -16,7 +16,7 @@ interface FiresideChatState {
   // Actions
   updateField: (field: 'guestName' | 'guestBio' | 'audienceProfile', value: string) => void;
   clearForm: () => void;
-  setGenerating: (isGenerating: boolean) => void;
+  setIsGenerating: (isGenerating: boolean) => void;
   setError: (error: string | null) => void;
   setPreparationNotes: (notes: string) => void;
 }
@@ -48,7 +48,7 @@ export const useFiresideChatStore = create<FiresideChatState>((set) => ({
       preparationNotes: '',
     }),
 
-  setGenerating: (isGenerating) =>
+  setIsGenerating: (isGenerating) =>
     set((state) => ({
       ...state,
       isGenerating,

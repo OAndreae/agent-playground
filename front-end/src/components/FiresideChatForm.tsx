@@ -16,7 +16,7 @@ export function FiresideChatForm() {
     error,
     updateField,
     clearForm,
-    setGenerating,
+    setIsGenerating: setGenerating,
     setError,
   } = useFiresideChatStore();
 
