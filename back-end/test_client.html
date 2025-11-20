@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fireside Chat Assistant - Test Client</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        #status {
+            padding: 10px;
+            margin: 20px 0;
+            border-radius: 5px;
+            display: none;
+        }
+        #status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        #status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        #status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        #output {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎙️ Fireside Chat Assistant</h1>
+        <p>Test the podcast research agent API</p>
+
+        <div id="status"></div>
+
+        <div class="form-group">
+            <label for="guestSpeaker">Guest Speaker Name:</label>
+            <input type="text" id="guestSpeaker"
+                   value="Dr. Emily Chen"
+                   placeholder="e.g., Dr. Jane Smith">
+        </div>
+
+        <div class="form-group">
+            <label for="guestBio">Guest Speaker Bio:</label>
+            <textarea id="guestBio"
+                      placeholder="Brief biography of the guest speaker">Quantum computing researcher at Stanford University, pioneering work in quantum algorithms and error correction</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="audience">Target Audience:</label>
+            <textarea id="audience"
+                      placeholder="Description of your podcast audience">Tech professionals and software engineers interested in quantum computing and its practical applications</textarea>
+        </div>
+
+        <button id="startBtn" onclick="startResearch()">
+            🚀 Start Research
+        </button>
+        <button id="stopBtn" onclick="stopStreaming()" disabled style="background: #dc3545;">
+            ⏹️ Stop
+        </button>
+
+        <div id="followUpSection" class="hidden" style="margin-top: 20px;">
+            <div class="form-group">
+                <label for="followUpMessage">Follow-up Question:</label>
+                <input type="text" id="followUpMessage"
+                       placeholder="Ask a follow-up question...">
+            </div>
+            <button onclick="sendFollowUp()">📨 Send Follow-up</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+        let currentSessionId = null;
+        let eventSource = null;
+
+        function showStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = type;
+            statusEl.style.display = 'block';
+        }
+
+        function appendOutput(text) {
+            const outputEl = document.getElementById('output');
+            outputEl.textContent += text;
+            outputEl.scrollTop = outputEl.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('output').textContent = '';
+        }
+
+        async function startResearch() {
+            const guestSpeaker = document.getElementById('guestSpeaker').value;
+            const guestBio = document.getElementById('guestBio').value;
+            const audience = document.getElementById('audience').value;
+
+            if (!guestSpeaker || !guestBio || !audience) {
+                showStatus('Please fill in all fields', 'error');
+                return;
+            }
+
+            clearOutput();
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+            document.getElementById('followUpSection').classList.add('hidden');
+
+            showStatus('Creating session...', 'info');
+
+            try {
+                // Create session
+                const response = await fetch(`${API_BASE}/sessions`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        guest_speaker: guestSpeaker,
+                        guest_speaker_bio: guestBio,
+                        audience_description: audience,
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                currentSessionId = data.session_id;
+
+                showStatus(`Session created: ${currentSessionId}`, 'success');
+                appendOutput(`Session ID: ${currentSessionId}\n`);
+                appendOutput(`Created at: ${data.created_at}\n`);
+                appendOutput('\n' + '='.repeat(80) + '\n');
+                appendOutput('Streaming agent response...\n\n');
+
+                // Start streaming
+                streamSession(currentSessionId);
+
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'error');
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = true;
+            }
+        }
+
+        function streamSession(sessionId) {
+            eventSource = new EventSource(`${API_BASE}/sessions/${sessionId}/stream`);
+
+            eventSource.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                // Handle turn completion
+                if (data.turn_complete) {
+                    appendOutput('\n\n' + '='.repeat(80) + '\n');
+                    appendOutput('✓ Agent completed response\n');
+                    showStatus('Research complete!', 'success');
+                    stopStreaming();
+                    document.getElementById('followUpSection').classList.remove('hidden');
+                    return;
+                }
+
+                // Handle errors
+                if (data.error) {
+                    appendOutput(`\n\n❌ Error: ${data.error}\n`);
+                    if (data.detail) {
+                        appendOutput(`Detail: ${data.detail}\n`);
+                    }
+                    showStatus('Error during streaming', 'error');
+                    stopStreaming();
+                    return;
+                }
+
+                // Handle text data
+                if (data.data) {
+                    appendOutput(data.data);
+                }
+            };
+
+            eventSource.onerror = function(error) {
+                console.error('EventSource error:', error);
+                showStatus('Connection error', 'error');
+                stopStreaming();
+            };
+        }
+
+        function stopStreaming() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        async function sendFollowUp() {
+            const message = document.getElementById('followUpMessage').value;
+            if (!message || !currentSessionId) return;
+
+            showStatus('Sending follow-up message...', 'info');
+
+            try {
+                const response = await fetch(`${API_BASE}/sessions/${currentSessionId}/message`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                appendOutput('\n\n' + '='.repeat(80) + '\n');
+                appendOutput(`📨 You: ${message}\n\n`);
+
+                showStatus('Message sent! Streaming response...', 'success');
+                document.getElementById('followUpMessage').value = '';
+                document.getElementById('followUpSection').classList.add('hidden');
+                document.getElementById('stopBtn').disabled = false;
+
+                // Stream the response
+                streamSession(currentSessionId);
+
+            } catch (error) {
+                showStatus(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Check API health on load
+        window.onload = async function() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                const health = await response.json();
+                if (health.status === 'healthy' && health.agent_loaded) {
+                    showStatus('✓ Connected to API - Ready to start', 'success');
+                } else {
+                    showStatus('⚠️ API connected but agent not loaded', 'error');
+                }
+            } catch (error) {
+                showStatus('❌ Cannot connect to API. Is the server running?', 'error');
+            }
+        };
+    </script>
+</body>
+</html>
