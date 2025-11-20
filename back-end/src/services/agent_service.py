@@ -1,13 +1,63 @@
 """Agent service for managing Google ADK agent sessions."""
 
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Dict, Optional, AsyncIterator
+from typing import AsyncIterator, Dict, Optional, Protocol, cast
 
 from google.adk.agents import config_agent_utils
-from google.adk.runners import InMemoryRunner, RunConfig, LiveRequestQueue
+from google.adk.runners import InMemoryRunner  # pyright: ignore[reportAttributeAccessIssue]
+from google.adk.runners import RunConfig  # pyright: ignore[reportAttributeAccessIssue,reportPrivateImportUsage]
+from google.adk.runners import LiveRequestQueue  # pyright: ignore[reportAttributeAccessIssue,reportPrivateImportUsage]
 from google.genai.types import Content, Part
+
+from ..tools import google_search_tool
+
+
+class AgentProtocol(Protocol):
+    """Protocol for Google ADK Agent objects."""
+
+    instruction: str
+    tools: list[object]
+
+
+class SessionProtocol(Protocol):
+    """Protocol for Google ADK Session objects."""
+
+    pass
+
+
+class LiveRequestQueueProtocol(Protocol):
+    """Protocol for Google ADK LiveRequestQueue objects."""
+
+    def send_content(self, content: Content) -> None:
+        """Send content to the queue."""
+        ...
+
+    def close(self) -> None:
+        """Close the queue."""
+        ...
+
+
+class PartProtocol(Protocol):
+    """Protocol for Part objects in event content."""
+
+    text: str | None
+
+
+class ContentProtocol(Protocol):
+    """Protocol for Content objects in events."""
+
+    parts: list[PartProtocol]
+
+
+class LiveEvent(Protocol):
+    """Protocol for live event objects from the agent."""
+
+    turn_complete: bool | None
+    interrupted: bool | None
+    partial: bool | None
+    content: ContentProtocol | None
 
 
 class SessionInfo:
@@ -17,11 +67,11 @@ class SessionInfo:
         self,
         session_id: str,
         runner: InMemoryRunner,
-        session,
-        live_request_queue: LiveRequestQueue,
-        live_events: AsyncIterator,
+        session: SessionProtocol,
+        live_request_queue: LiveRequestQueueProtocol,
+        live_events: AsyncIterator[LiveEvent],
         created_at: datetime,
-    ):
+    ) -> None:
         self.session_id = session_id
         self.runner = runner
         self.session = session
@@ -34,7 +84,7 @@ class SessionInfo:
 class SessionManager:
     """Manages agent sessions and their lifecycle."""
 
-    def __init__(self, agent):
+    def __init__(self, agent: AgentProtocol) -> None:
         """Initialize the session manager with a loaded agent.
 
         Args:
@@ -48,7 +98,7 @@ class SessionManager:
         guest_speaker: str,
         guest_speaker_bio: str,
         audience_description: str,
-    ):
+    ) -> AgentProtocol:
         """Create a copy of the agent with template parameters substituted.
 
         Args:
@@ -62,7 +112,7 @@ class SessionManager:
         import copy
 
         # Create a deep copy of the agent
-        agent_copy = copy.copy(self.agent)
+        agent_copy: AgentProtocol = copy.copy(self.agent)
 
         # Get the original instruction
         original_instruction = self.agent.instruction
@@ -76,6 +126,10 @@ class SessionManager:
 
         # Set the new instruction
         agent_copy.instruction = substituted_instruction
+
+        # Register the custom Google Search tool
+        # Replace the YAML-referenced google_search with our custom implementation
+        agent_copy.tools = [google_search_tool]
 
         return agent_copy
 
@@ -96,7 +150,7 @@ class SessionManager:
             Tuple of (session_id, created_at timestamp).
         """
         session_id = str(uuid.uuid4())
-        created_at = datetime.utcnow()
+        created_at = datetime.now(UTC)
 
         # Create a copy of the agent with substituted parameters
         # The agent's instruction contains placeholders that need to be replaced
@@ -107,28 +161,34 @@ class SessionManager:
         )
 
         # Create InMemoryRunner for this session with the parameterized agent
-        runner = InMemoryRunner(
+        runner = InMemoryRunner(  # pyright: ignore[reportArgumentType]
             app_name="podcast_researcher",
-            agent=agent_copy,
+            agent=agent_copy,  # pyright: ignore[reportArgumentType]
         )
 
         # Create a session
-        session = await runner.session_service.create_session(
-            app_name="podcast_researcher",
-            user_id=session_id,
+        session = cast(
+            SessionProtocol,
+            await runner.session_service.create_session(
+                app_name="podcast_researcher",
+                user_id=session_id,
+            ),
         )
 
         # Configure the agent run
         run_config = RunConfig(response_modalities=["TEXT"])
 
         # Create live request queue
-        live_request_queue = LiveRequestQueue()
+        live_request_queue = cast(LiveRequestQueueProtocol, LiveRequestQueue())
 
         # Start the agent with live streaming
-        live_events = runner.run_live(
-            session=session,
-            live_request_queue=live_request_queue,
-            run_config=run_config,
+        live_events = cast(
+            AsyncIterator[LiveEvent],
+            runner.run_live(  # pyright: ignore[reportArgumentType]
+                session=session,  # pyright: ignore[reportArgumentType]
+                live_request_queue=live_request_queue,  # pyright: ignore[reportArgumentType]
+                run_config=run_config,
+            ),
         )
 
         # Store session info
@@ -214,7 +274,7 @@ class SessionManager:
         return sum(1 for s in self.sessions.values() if s.is_active)
 
 
-def load_agent(yaml_path: str):
+def load_agent(yaml_path: str) -> AgentProtocol:
     """Load a Google ADK agent from a YAML configuration file.
 
     Args:
@@ -233,6 +293,6 @@ def load_agent(yaml_path: str):
         raise FileNotFoundError(f"Agent configuration not found: {yaml_path}")
 
     # Load agent from YAML configuration
-    agent = config_agent_utils.from_config(str(config_path))
+    agent = cast(AgentProtocol, config_agent_utils.from_config(str(config_path)))
 
     return agent

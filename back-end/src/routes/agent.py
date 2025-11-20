@@ -12,7 +12,7 @@ from ..models.dtos import (
     SendMessageRequest,
     ErrorResponse,
 )
-from ..services.agent_service import SessionManager
+from ..services.agent_service import PartProtocol, SessionManager
 
 router = APIRouter(prefix="/sessions", tags=["agent"])
 
@@ -133,7 +133,10 @@ async def stream_session(session_id: str) -> StreamingResponse:
                     continue
 
                 # Extract event content
-                part = event.content and event.content.parts and event.content.parts[0]
+                if not event.content or not event.content.parts:
+                    continue
+
+                part: PartProtocol = event.content.parts[0]
                 if not part:
                     continue
 
@@ -162,7 +165,8 @@ async def stream_session(session_id: str) -> StreamingResponse:
             yield f"data: {json.dumps(error_message)}\n\n"
         finally:
             # Cleanup session when stream ends
-            session_manager.close_session(session_id)
+            if session_manager:
+                session_manager.close_session(session_id)
 
     return StreamingResponse(
         event_generator(),

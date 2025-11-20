@@ -3,23 +3,33 @@
 import os
 from pathlib import Path
 from contextlib import asynccontextmanager
+from typing import AsyncIterator, Optional
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from .routes import agent_router
 from .routes.agent import set_session_manager
-from .services.agent_service import SessionManager, load_agent
+from .services.agent_service import AgentProtocol, SessionManager, load_agent
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Debug: Print API key status (first few characters only for security)
+api_key = os.getenv("GOOGLE_API_KEY", "")
+print(
+    f"Debug: GOOGLE_API_KEY loaded: {bool(api_key)} (starts with: {api_key[:10] if api_key else 'NOT SET'}...)"
+)
 
 # Global agent and session manager
-agent = None
-session_manager = None
+agent: Optional[AgentProtocol] = None
+session_manager: Optional[SessionManager] = None
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Application lifespan manager for startup and shutdown events.
 
     Initializes the Google ADK agent and session manager on startup.

@@ -1,6 +1,6 @@
 """Data Transfer Objects for the API."""
 
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -43,7 +43,7 @@ class CreateSessionResponse(BaseModel):
 
     session_id: str = Field(..., description="Unique identifier for the session")
     created_at: datetime = Field(
-        default_factory=datetime.utcnow,
+        default_factory=lambda: datetime.now(UTC),
         description="Timestamp when the session was created",
     )
     status: str = Field(

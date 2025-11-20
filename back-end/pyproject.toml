@@ -7,7 +7,7 @@ requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.121.3",
     "google-adk>=1.18.0",
-    "mypy>=1.18.2",
+    "google-api-python-client>=2.0.0",
     "ruff>=0.14.5",
     "uvicorn>=0.38.0",
 ]
@@ -25,3 +25,18 @@ packages = ["src", "scripts"]
 
 [tool.uv]
 package = true
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.13"
+include = ["src", "scripts"]
+reportMissingTypeStubs = false
+reportUnknownParameterType = true
+reportUnknownArgumentType = true
+reportUnknownMemberType = true
+reportUnknownVariableType = true
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.407",
+]
