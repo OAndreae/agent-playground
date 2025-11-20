@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { FiresideChatForm } from '@/components/FiresideChatForm';
-import { PreparationNotesDisplay } from '@/components/PreparationNotesDisplay';
+import { FiresideChatForm } from '@/components/form-panel';
+import { PreparationNotesDisplay } from '@/components/notes';
 
 export const Route = createFileRoute('/')({
   component: HomePage,

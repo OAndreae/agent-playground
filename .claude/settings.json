@@ -6,7 +6,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run ruff format"
+            "command": "if [[ \"$FILE_PATH\" == *.py ]]; then uv run ruff format \"$FILE_PATH\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$FILE_PATH\" == *.ts || \"$FILE_PATH\" == *.tsx ]]; then pnpm lint --fix; fi"
           }
         ]
       }
