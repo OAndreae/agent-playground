@@ -1,5 +1,6 @@
 """FastAPI application entry point."""
 
+import logging
 import os
 from pathlib import Path
 from contextlib import asynccontextmanager
@@ -36,6 +37,15 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """
     global agent, session_manager
 
+    # Configure logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
+    logger = logging.getLogger(__name__)
+    logger.info("Application starting up...")
+
     # Get the agent YAML path
     agent_path = os.getenv(
         "AGENT_YAML_PATH",
@@ -49,21 +59,21 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         ),
     )
 
-    print(f"Loading agent from: {agent_path}")
+    logger.info(f"Loading agent from: {agent_path}")
 
     # Load the agent
     agent = load_agent(agent_path)
-    print("Agent loaded successfully")
+    logger.info("Agent loaded successfully")
 
     # Initialize session manager
     session_manager = SessionManager(agent)
     set_session_manager(session_manager)
-    print("Session manager initialized")
+    logger.info("Session manager initialized")
 
     yield
 
     # Cleanup on shutdown
-    print("Shutting down...")
+    logger.info("Shutting down...")
 
 
 app = FastAPI(

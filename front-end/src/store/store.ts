@@ -10,6 +10,9 @@ interface FiresideChatState {
   isGenerating: boolean;
   error: string | null;
 
+  // Session
+  sessionId: string | null;
+
   // Preparation notes
   preparationNotes: string;
 
@@ -18,6 +21,7 @@ interface FiresideChatState {
   clearForm: () => void;
   setIsGenerating: (isGenerating: boolean) => void;
   setError: (error: string | null) => void;
+  setSessionId: (sessionId: string | null) => void;
   setPreparationNotes: (notes: string) => void;
 }
 
@@ -28,6 +32,7 @@ export const useFiresideChatStore = create<FiresideChatState>((set) => ({
   audienceProfile: '',
   isGenerating: false,
   error: null,
+  sessionId: null,
   preparationNotes: '',
 
   // Actions
@@ -45,6 +50,7 @@ export const useFiresideChatStore = create<FiresideChatState>((set) => ({
       audienceProfile: '',
       isGenerating: false,
       error: null,
+      sessionId: null,
       preparationNotes: '',
     }),
 
@@ -60,6 +66,12 @@ export const useFiresideChatStore = create<FiresideChatState>((set) => ({
       ...state,
       error,
       isGenerating: false,
+    })),
+
+  setSessionId: (sessionId) =>
+    set((state) => ({
+      ...state,
+      sessionId,
     })),
 
   setPreparationNotes: (notes) =>

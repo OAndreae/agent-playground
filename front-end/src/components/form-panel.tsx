@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useFiresideChatStore } from '@/store/store';
+import { ApiError, createSession } from '@/lib/api-client';
 
 export function FiresideChatForm() {
   const {
@@ -18,6 +19,7 @@ export function FiresideChatForm() {
     clearForm,
     setIsGenerating: setGenerating,
     setError,
+    setSessionId,
   } = useFiresideChatStore();
 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
@@ -45,7 +47,7 @@ export function FiresideChatForm() {
     return Object.keys(errors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -53,11 +55,25 @@ export function FiresideChatForm() {
     }
 
     setGenerating(true);
+    setError(null);
 
-    setTimeout(() => {
+    try {
+      const response = await createSession({
+        guest_speaker: guestName,
+        guest_speaker_bio: guestBio,
+        audience_description: audienceProfile,
+      });
+
+      setSessionId(response.session_id);
+    } catch (err) {
       setGenerating(false);
-      setError('API integration pending. Your form data has been validated successfully!');
-    }, 1000);
+
+      if (err instanceof ApiError) {
+        setError(err.detail || err.message);
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
+    }
   };
 
   const handleClear = () => {
