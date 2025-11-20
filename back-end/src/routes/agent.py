@@ -1,6 +1,7 @@
 """Agent API routes for session management and streaming."""
 
 import json
+import logging
 from typing import AsyncIterator
 
 from fastapi import APIRouter, HTTPException, status
@@ -13,6 +14,8 @@ from ..models.dtos import (
     ErrorResponse,
 )
 from ..services.agent_service import PartProtocol, SessionManager
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/sessions", tags=["agent"])
 
@@ -63,6 +66,10 @@ async def create_session(request: CreateSessionRequest) -> CreateSessionResponse
             guest_speaker=request.guest_speaker,
             guest_speaker_bio=request.guest_speaker_bio,
             audience_description=request.audience_description,
+        )
+
+        logger.info(
+            f"Created new session {session_id} for guest: {request.guest_speaker}"
         )
 
         return CreateSessionResponse(
@@ -130,6 +137,10 @@ async def stream_session(session_id: str) -> StreamingResponse:
                         "interrupted": event.interrupted,
                     }
                     yield f"data: {json.dumps(message)}\n\n"
+                    logger.info(
+                        f"Returning turn_complete chunk for session {session_id}: "
+                        f"turn_complete={event.turn_complete}, interrupted={event.interrupted}"
+                    )
                     continue
 
                 # Extract event content
@@ -147,6 +158,12 @@ async def stream_session(session_id: str) -> StreamingResponse:
                         "data": part.text,
                     }
                     yield f"data: {json.dumps(message)}\n\n"
+                    truncated_text = (
+                        part.text[:50] + "..." if len(part.text) > 50 else part.text
+                    )
+                    logger.info(
+                        f'Returning partial chunk for session {session_id}: "{truncated_text}"'
+                    )
 
                 # Also send complete (non-partial) messages
                 elif part.text and not event.partial:
@@ -156,6 +173,12 @@ async def stream_session(session_id: str) -> StreamingResponse:
                         "complete": True,
                     }
                     yield f"data: {json.dumps(message)}\n\n"
+                    truncated_text = (
+                        part.text[:50] + "..." if len(part.text) > 50 else part.text
+                    )
+                    logger.info(
+                        f'Returning complete chunk for session {session_id}: "{truncated_text}"'
+                    )
 
         except Exception as e:
             error_message = {
@@ -163,10 +186,14 @@ async def stream_session(session_id: str) -> StreamingResponse:
                 "detail": str(e),
             }
             yield f"data: {json.dumps(error_message)}\n\n"
+            logger.error(f"Returning error chunk for session {session_id}: {str(e)}")
         finally:
             # Cleanup session when stream ends
             if session_manager:
                 session_manager.close_session(session_id)
+                logger.info(
+                    f"Auto-cleanup: closed session {session_id} after stream ended"
+                )
 
     return StreamingResponse(
         event_generator(),
@@ -223,6 +250,11 @@ async def send_message(
             detail=f"Session {session_id} not found or inactive",
         )
 
+    truncated_message = (
+        request.message[:50] + "..." if len(request.message) > 50 else request.message
+    )
+    logger.info(f'Sent message to session {session_id}: "{truncated_message}"')
+
     return {"status": "sent", "session_id": session_id}
 
 
@@ -252,6 +284,8 @@ async def close_session(session_id: str) -> dict[str, str]:
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Session {session_id} not found",
         )
+
+    logger.info(f"Closed session {session_id}")
 
     return {"status": "closed", "session_id": session_id}
 
