@@ -1,0 +1,1 @@
+Use British English spellings (e.g., "organise" instead of "organize").
