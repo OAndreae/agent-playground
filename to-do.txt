@@ -1,5 +1,11 @@
 Claude Code use cases
 
+Parallel sub-agents
+"use parallel task tool calls to do [overall task] each task tool should [description of each sub agent task]"
+"Run multiple Task invocations in a SINGLE message"
+
+https://www.reddit.com/r/ClaudeAI/comments/1ln1kmc/cant_get_claude_code_to_use_subagents_in_parallel/
+
 Subagents
 - Code review sub-agent (use the existing one)
 - Documentation generator sub-agent
@@ -30,6 +36,7 @@ Demo ideas
 - Adding an objectives/themes feature
 - Adding a talk format feature (e.g. quickfire questions, panel discussion, external speaker, include written script and segues etc.)
 - Add in-line citations for generated content (like Google Search AI Mode)
+- Questions on given topics
 
 Common enterprise use cases (demo ideas)
 - Automated code review of changes before creating a PR
