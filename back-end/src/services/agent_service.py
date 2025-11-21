@@ -2,10 +2,8 @@
 
 import uuid
 from datetime import UTC, datetime
-from pathlib import Path
 from typing import AsyncIterator, Dict, Optional, Protocol, cast
 
-from google.adk.agents import config_agent_utils
 from google.adk.runners import InMemoryRunner  # pyright: ignore[reportAttributeAccessIssue]
 from google.adk.runners import RunConfig  # pyright: ignore[reportAttributeAccessIssue,reportPrivateImportUsage]
 from google.adk.runners import LiveRequestQueue  # pyright: ignore[reportAttributeAccessIssue,reportPrivateImportUsage]
@@ -274,25 +272,3 @@ class SessionManager:
         return sum(1 for s in self.sessions.values() if s.is_active)
 
 
-def load_agent(yaml_path: str) -> AgentProtocol:
-    """Load a Google ADK agent from a YAML configuration file.
-
-    Args:
-        yaml_path: Path to the agent YAML configuration file.
-
-    Returns:
-        The loaded agent instance.
-
-    Raises:
-        FileNotFoundError: If the YAML file doesn't exist.
-        ValueError: If the YAML file is invalid.
-    """
-    config_path = Path(yaml_path)
-
-    if not config_path.exists():
-        raise FileNotFoundError(f"Agent configuration not found: {yaml_path}")
-
-    # Load agent from YAML configuration
-    agent = cast(AgentProtocol, config_agent_utils.from_config(str(config_path)))
-
-    return agent
