@@ -1,0 +1,31 @@
+Claude Code use cases
+
+Subagents
+- Code review sub-agent (use the existing one)
+- Documentation generator sub-agent
+- Testing sub-agent
+- Refactoring sub-agent
+- Bug fixing sub-agent
+- UX designer sub-agent
+
+Claude Code Hooks
+- Formatting with ruff and eslint after code generation
+- Conversation reporting and analytics (like Anthropic's own analysis tool)
+
+To-do before demo
+- Prevent the double-rendering of the briefing notes
+- Refactor the back-end
+- [Potentially] improve the UI
+- [Potentially] deploy to GCP
+
+Demo ideas
+- Add a follow-up question feature
+- Add a copy and download feature
+- Re-design the UI using the UX designer sub-agent
+- Adding an objectives/themes feature
+- Adding a talk format feature (e.g. quickfire questions, external speaker, include written script and segues etc.)
+- Add in-line citations for generated content (like Google Search AI Mode)
+
+Common enterprise use cases (demo ideas)
+- Automated code review of changes before creating a PR
+- Security review (built-in)
