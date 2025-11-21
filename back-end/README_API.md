@@ -319,15 +319,14 @@ GOOGLE_API_KEY=your_api_key_here
 GOOGLE_CSE_ID=your_custom_search_engine_id
 
 # Optional
-AGENT_YAML_PATH=/path/to/custom/agent.yaml
 GOOGLE_GENAI_USE_VERTEXAI=0
 ```
 
 ### Agent Configuration
 
-The agent is configured in:
+The agent is configured in Python:
 ```
-src/agents/fireside_chat_assistant/tmp/fireside_chat_assistant/root_agent.yaml
+src/agents/agent.py
 ```
 
 Key settings:

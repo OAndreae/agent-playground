@@ -2,7 +2,6 @@
 
 import logging
 import os
-from pathlib import Path
 from contextlib import asynccontextmanager
 from typing import AsyncIterator, Optional
 
@@ -13,7 +12,8 @@ from fastapi.responses import JSONResponse
 
 from .routes import agent_router
 from .routes.agent import set_session_manager
-from .services.agent_service import AgentProtocol, SessionManager, load_agent
+from .services.agent_service import AgentProtocol, SessionManager
+from .agents.agent import podcast_researcher
 
 # Load environment variables from .env file
 load_dotenv()
@@ -46,24 +46,9 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     logger = logging.getLogger(__name__)
     logger.info("Application starting up...")
 
-    # Get the agent YAML path
-    agent_path = os.getenv(
-        "AGENT_YAML_PATH",
-        str(
-            Path(__file__).parent
-            / "agents"
-            / "fireside_chat_assistant"
-            / "tmp"
-            / "fireside_chat_assistant"
-            / "root_agent.yaml"
-        ),
-    )
-
-    logger.info(f"Loading agent from: {agent_path}")
-
-    # Load the agent
-    agent = load_agent(agent_path)
-    logger.info("Agent loaded successfully")
+    # Load the Python-defined agent
+    agent = podcast_researcher
+    logger.info("Agent loaded successfully from Python module")
 
     # Initialize session manager
     session_manager = SessionManager(agent)

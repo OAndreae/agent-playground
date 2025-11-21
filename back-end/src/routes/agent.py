@@ -167,7 +167,7 @@ async def stream_session(session_id: str) -> StreamingResponse:
 
                 # Also send complete (non-partial) messages
                 elif part.text and not event.partial:
-                    message = {
+                    message = { # pyright: ignore[reportUnknownVariableType]
                         "mime_type": "text/plain",
                         "data": part.text,
                         "complete": True,

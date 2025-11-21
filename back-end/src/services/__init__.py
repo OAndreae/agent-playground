@@ -1,5 +1,5 @@
 """Services package."""
 
-from .agent_service import SessionManager, load_agent
+from .agent_service import SessionManager
 
-__all__ = ["SessionManager", "load_agent"]
+__all__ = ["SessionManager"]
