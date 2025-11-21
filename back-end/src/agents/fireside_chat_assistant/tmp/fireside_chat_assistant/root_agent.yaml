@@ -31,10 +31,10 @@ instruction: >
   speaker's background and expertise. Do not directly reference the audience
   ({AUDIENCE_DESCRIPTION}) in your questions.
 
+  Do not include any preamble or explanation in your output. Only provide the
+  report.
 
   Output format:
-
-  <output_format>
 
   # <speaker name>
 
@@ -70,8 +70,6 @@ instruction: >
   - <source 2 name (description)>: <markdown link to source 2>
 
   - etc.
-
-  </output_format>
 sub_agents: []
 tools:
   - name: google_search

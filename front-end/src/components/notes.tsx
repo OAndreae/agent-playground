@@ -1,5 +1,7 @@
 import { AlertCircle, FileText, Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useFiresideChatStore } from '@/store/store';
@@ -52,13 +54,13 @@ export function PreparationNotesDisplay() {
               </div>
               {data && (
                 <div className="prose prose-sm max-w-none dark:prose-invert">
-                  <div className="whitespace-pre-wrap">{data}</div>
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
                 </div>
               )}
             </div>
           ) : data ? (
             <div className="prose prose-sm max-w-none dark:prose-invert">
-              <div className="whitespace-pre-wrap">{data}</div>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-muted-foreground">
