@@ -6,6 +6,11 @@ Subagents
 - Testing sub-agent
 - Refactoring sub-agent
 - Bug fixing sub-agent
+- Product manager sub-agent (with an internal knowledge bank describing key use cases)
+  - Elicits application use cases from stakeholders and records them in a knowledge bank
+  - Uses the knowledge bank to inform other sub-agents
+  - Prioritises features and creates a roadmap
+- UX analysis sub-agent
 - UX designer sub-agent
 
 Claude Code Hooks
@@ -23,7 +28,7 @@ Demo ideas
 - Add a copy and download feature
 - Re-design the UI using the UX designer sub-agent
 - Adding an objectives/themes feature
-- Adding a talk format feature (e.g. quickfire questions, external speaker, include written script and segues etc.)
+- Adding a talk format feature (e.g. quickfire questions, panel discussion, external speaker, include written script and segues etc.)
 - Add in-line citations for generated content (like Google Search AI Mode)
 
 Common enterprise use cases (demo ideas)
