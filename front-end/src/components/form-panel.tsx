@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useFiresideChatStore } from '@/store/store';
-import { ApiError, createSession } from '@/lib/api-client';
+import { ApiError, startResearch } from '@/lib/api-client';
 
 export function FiresideChatForm() {
   const {
@@ -19,7 +19,7 @@ export function FiresideChatForm() {
     clearForm,
     setIsGenerating: setGenerating,
     setError,
-    setSessionId,
+    setStreamResponse,
   } = useFiresideChatStore();
 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
@@ -33,14 +33,14 @@ export function FiresideChatForm() {
 
     if (!guestBio.trim()) {
       errors.guestBio = 'Guest description is required';
-    } else if (guestBio.trim().length < 20) {
-      errors.guestBio = 'Please provide a more detailed description (at least 20 characters)';
+    } else if (guestBio.trim().length < 10) {
+      errors.guestBio = 'Please provide a more detailed description (at least 10 characters)';
+    } else if (guestBio.trim().length > 250) {
+      errors.guestBio = 'Description must not exceed 250 characters';
     }
 
     if (!audienceProfile.trim()) {
       errors.audienceProfile = 'Audience profile is required';
-    } else if (audienceProfile.trim().length < 20) {
-      errors.audienceProfile = 'Please provide a more detailed audience profile (at least 20 characters)';
     }
 
     setValidationErrors(errors);
@@ -58,13 +58,13 @@ export function FiresideChatForm() {
     setError(null);
 
     try {
-      const response = await createSession({
-        guest_speaker: guestName,
-        guest_speaker_bio: guestBio,
-        audience_description: audienceProfile,
+      const response = await startResearch({
+        guestSpeaker: guestName,
+        speakerDescription: guestBio,
+        audience: audienceProfile,
       });
 
-      setSessionId(response.session_id);
+      setStreamResponse(response);
     } catch (err) {
       setGenerating(false);
 

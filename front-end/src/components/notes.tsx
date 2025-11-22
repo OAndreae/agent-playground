@@ -8,8 +8,8 @@ import { useFiresideChatStore } from '@/store/store';
 import { useStreaming } from '@/lib/use-streaming';
 
 export function PreparationNotesDisplay() {
-  const { sessionId, isGenerating, setIsGenerating, setPreparationNotes, setError } = useFiresideChatStore();
-  const { data, isStreaming, error: streamError, isComplete } = useStreaming(sessionId);
+  const { streamResponse, isGenerating, setIsGenerating, setPreparationNotes, setError } = useFiresideChatStore();
+  const { data, isStreaming, error: streamError, isComplete } = useStreaming(streamResponse);
 
   useEffect(() => {
     if (data) {
