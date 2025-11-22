@@ -18,7 +18,10 @@
   "fmt": {
     "singleQuote": true,
     "semiColons": true,
-    "trailingCommas": "onlyMultiLine"
+    "trailingCommas": "onlyMultiLine",
+    "exclude": [
+      "*.md"
+    ]
   },
   "lint": {
     "rules": {
