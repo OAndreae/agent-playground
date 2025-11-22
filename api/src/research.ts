@@ -1,5 +1,44 @@
 import { streamText } from 'ai';
 import { google } from '@ai-sdk/google';
+import { Context } from 'hono';
+import z from 'zod';
+
+const researchRequestSchema = z.object({
+  guestSpeaker: z.string().min(1, 'Guest speaker name is required.'),
+  speakerDescription: z.string().min(10, 'Speaker description is required.')
+    .max(250, 'Speaker description is too long.'),
+  audience: z.string().optional(),
+  objectives: z.string().optional(),
+});
+
+export const researchHandler = async (c: Context) => {
+  try {
+    const body = await c.req.json();
+    const data = researchRequestSchema.parse(body);
+
+    return research_guest({
+      name: data.guestSpeaker,
+      description: data.speakerDescription,
+      targetAudience: data.audience || 'General Audience',
+    }).toTextStreamResponse();
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return c.json(
+        {
+          error: 'Validation failed.',
+          issues: error.errors,
+        },
+        400,
+      );
+    }
+    return c.json(
+      {
+        error: 'Internal server error.',
+      },
+      500,
+    );
+  }
+};
 
 /**
  * @param name The ful name of the guest speaker.
