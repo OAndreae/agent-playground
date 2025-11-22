@@ -1,0 +1,30 @@
+{
+  "imports": {
+    "@ai-sdk/google": "npm:@ai-sdk/google@^2.0.41",
+    "@std/expect": "jsr:@std/expect@^1.0.17",
+    "@std/testing": "jsr:@std/testing@^1.0.16",
+    "ai": "npm:ai@^5.0.99",
+    "hono": "jsr:@hono/hono@^4.10.6",
+    "zod": "npm:zod@^3.24.1"
+  },
+  "tasks": {
+    "start": "deno run --env-file --allow-net --allow-write --allow-env=GOOGLE_GENERATIVE_AI_API_KEY src/main.ts",
+    "dev": "deno run --env-file --allow-net --allow-write --allow-env=GOOGLE_GENERATIVE_AI_API_KEY --watch=src/ src/main.ts"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  },
+  "fmt": {
+    "singleQuote": true,
+    "semiColons": true,
+    "trailingCommas": "onlyMultiLine"
+  },
+  "lint": {
+    "rules": {
+      "tags": [
+        "recommended"
+      ]
+    }
+  }
+}
