@@ -1,7 +1,6 @@
 import type { Context } from 'hono';
 import type { ResearchService } from './service.ts';
 import { researchRequestSchema } from './schema.ts';
-import { AI_CONFIG } from './config.ts';
 import z from 'zod';
 
 /**
@@ -20,7 +19,7 @@ export const createResearchHandler = (service: ResearchService) => {
         .researchGuest({
           name: data.guestSpeaker,
           description: data.speakerDescription,
-          targetAudience: data.audience || AI_CONFIG.defaultAudience,
+          targetAudience: data.audience,
         })
         .toTextStreamResponse();
     } catch (error) {

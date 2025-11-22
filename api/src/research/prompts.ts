@@ -1,6 +1,3 @@
-import type { ResearchParams } from './types.ts';
-import { AI_CONFIG } from './config.ts';
-
 /**
  * Builds the research prompt for the AI model.
  * @param params The research parameters.
@@ -10,7 +7,13 @@ export const buildResearchPrompt = ({
   name,
   description,
   targetAudience,
-}: ResearchParams): string => `
+  maxSearches = 10,
+}: {
+  name: string;
+  description: string;
+  targetAudience: string;
+  maxSearches?: number;
+}): string => `
 You are an expert podcast researcher.
 
 You are tasked with researching a guest speaker for a podcast episode and producing a script.
@@ -20,7 +23,7 @@ ${name}
 ${description}
 
 Use the Google Search tool to identify key sources of information about the guest speaker.
-Make at most ${AI_CONFIG.maxSearches} searches.
+Make at most ${maxSearches} searches.
 Output a detailed report for the podcast host, including key talking points and suggested questions for the guest speaker.
 Include citations for all information sources used.
 Tailor your questions so that they will be relevant and interesting to the audience: ${targetAudience}.

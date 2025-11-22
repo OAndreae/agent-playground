@@ -3,14 +3,13 @@ import { google } from '@ai-sdk/google';
 import type { ResearchParams } from './types.ts';
 import { buildResearchPrompt } from './prompts.ts';
 
-
 /**
  * Creates a research service for gathering information about guest speakers.
- * 
+ *
  * @param model - The language model to use for generating research content. Defaults to Google's Gemini 2.5 Flash model.
  * @param searchTool - The search tool to use for gathering information. Defaults to Google Search tool.
  * @returns A research service object with methods for researching guest speakers.
- * 
+ *
  * @example
  * ```typescript
  * const researchService = createResearchService();

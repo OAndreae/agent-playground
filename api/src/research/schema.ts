@@ -8,8 +8,8 @@ export const researchRequestSchema = z.object({
   speakerDescription: z.string()
     .min(10, 'Speaker description is required.')
     .max(250, 'Speaker description is too long.'),
-  audience: z.string().optional(),
+  audience: z.string(),
   objectives: z.string().optional(),
 });
 
- export type ResearchRequest = z.infer<typeof researchRequestSchema>;
+export type ResearchRequest = z.infer<typeof researchRequestSchema>;

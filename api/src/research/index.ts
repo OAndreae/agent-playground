@@ -10,8 +10,6 @@ export type { ResearchService } from './service.ts';
 
 export { createResearchHandler } from './handler.ts';
 
-export { AI_CONFIG } from './config.ts';
-
 import { createResearchService } from './service.ts';
 import { createResearchHandler } from './index.ts';
 
