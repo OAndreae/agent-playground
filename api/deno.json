@@ -9,7 +9,8 @@
   },
   "tasks": {
     "start": "deno run --env-file --allow-net --allow-write --allow-env=GOOGLE_GENERATIVE_AI_API_KEY src/main.ts",
-    "dev": "deno run --env-file --allow-net --allow-write --allow-env=GOOGLE_GENERATIVE_AI_API_KEY --watch=src/ src/main.ts"
+    "dev": "deno run --env-file --allow-net --allow-write --allow-env=GOOGLE_GENERATIVE_AI_API_KEY --watch=src/ src/main.ts",
+    "test": "deno test --allow-net --allow-env"
   },
   "compilerOptions": {
     "jsx": "precompile",
