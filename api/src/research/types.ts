@@ -13,13 +13,3 @@ export interface ResearchParams {
   /** The audience the guest speaker will be addressing. */
   targetAudience: string;
 }
-
-/**
- * HTTP request body for the research endpoint.
- */
-export interface ResearchRequest {
-  guestSpeaker: string;
-  speakerDescription: string;
-  audience?: string;
-  objectives?: string;
-}

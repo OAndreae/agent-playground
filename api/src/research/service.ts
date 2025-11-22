@@ -1,38 +1,47 @@
-import { streamText } from 'ai';
+import { LanguageModel, streamText, Tool } from 'ai';
 import { google } from '@ai-sdk/google';
 import type { ResearchParams } from './types.ts';
 import { buildResearchPrompt } from './prompts.ts';
-import { AI_CONFIG } from './config.ts';
+
 
 /**
- * Service for researching guest speakers.
- * Encapsulates the business logic for AI-powered research.
+ * Creates a research service for gathering information about guest speakers.
+ * 
+ * @param model - The language model to use for generating research content. Defaults to Google's Gemini 2.5 Flash model.
+ * @param searchTool - The search tool to use for gathering information. Defaults to Google Search tool.
+ * @returns A research service object with methods for researching guest speakers.
+ * 
+ * @example
+ * ```typescript
+ * const researchService = createResearchService();
+ * const results = researchService.researchGuest({ guestName: "John Doe" });
+ * ```
  */
-export class ResearchService {
-  /**
-   * Creates a new ResearchService instance.
-   * @param modelProvider The AI model provider (defaults to Google).
-   * @param modelName The model name to use (defaults to configured model).
-   */
-  constructor(
-    private modelProvider: typeof google = google,
-    private modelName: string = AI_CONFIG.model,
-  ) {}
+export const createResearchService = (
+  model: LanguageModel = google('gemini-2.5-flash'),
+  searchTool: Tool = google.tools.googleSearch({}),
+) => {
+  return {
+    /**
+     * Researches a guest speaker and generates a report.
+     * @param params The research parameters.
+     * @returns A stream text response containing the research results.
+     */
+    researchGuest: (params: ResearchParams) => {
+      const prompt = buildResearchPrompt(params);
 
-  /**
-   * Researches a guest speaker and generates a report.
-   * @param params The research parameters.
-   * @returns A stream text response containing the research results.
-   */
-  researchGuest(params: ResearchParams) {
-    const prompt = buildResearchPrompt(params);
+      return streamText({
+        model,
+        prompt,
+        tools: {
+          google_search: searchTool,
+        },
+      });
+    },
+  };
+};
 
-    return streamText({
-      model: this.modelProvider(this.modelName),
-      prompt,
-      tools: {
-        google_search: this.modelProvider.tools.googleSearch({}),
-      },
-    });
-  }
-}
+/**
+ * Type representing a research service instance.
+ */
+export type ResearchService = ReturnType<typeof createResearchService>;

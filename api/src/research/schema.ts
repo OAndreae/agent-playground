@@ -11,3 +11,5 @@ export const researchRequestSchema = z.object({
   audience: z.string().optional(),
   objectives: z.string().optional(),
 });
+
+ export type ResearchRequest = z.infer<typeof researchRequestSchema>;

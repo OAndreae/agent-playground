@@ -1,8 +1,8 @@
 import type { Context } from 'hono';
 import type { ResearchService } from './service.ts';
 import { researchRequestSchema } from './schema.ts';
-import { handleResearchError } from './errors.ts';
 import { AI_CONFIG } from './config.ts';
+import z from 'zod';
 
 /**
  * Creates a research handler with the provided service.
@@ -27,4 +27,24 @@ export const createResearchHandler = (service: ResearchService) => {
       return handleResearchError(c, error);
     }
   };
+};
+
+const handleResearchError = (c: Context, error: unknown) => {
+  if (error instanceof z.ZodError) {
+    return c.json(
+      {
+        error: 'Validation failed.',
+        issues: error.errors,
+      },
+      400,
+    );
+  }
+
+  console.error('Research handler error:', error);
+  return c.json(
+    {
+      error: 'Internal server error.',
+    },
+    500,
+  );
 };
