@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import { researchHandler } from './research.ts';
+import { researchHandler } from './research/index.ts';
 
 const PORT = 8002;
 
