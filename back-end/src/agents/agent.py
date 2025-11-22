@@ -59,7 +59,7 @@ PROMPT: Final[str] = """
 
 podcast_researcher: Final = LlmAgent(
   name="podcast_researcher",
-  model="gemini-2.5-flash",
+  model="gemini-2.0-flash-exp",
   instruction=PROMPT,
   tools=[google_search],
 )
