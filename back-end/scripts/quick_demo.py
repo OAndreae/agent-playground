@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Quick demo of the Fireside Chat Assistant API."""
+"""Quick demo of the Podcast Assistant API."""
 
 import json
 import requests
 
 API_URL = "http://localhost:8000"
 
-print("🎙️  Fireside Chat Assistant - Quick Demo\n")
+print("🎙️  Podcast Assistant - Quick Demo\n")
 print("=" * 80)
 
 # Step 1: Check health

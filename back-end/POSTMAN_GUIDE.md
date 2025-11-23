@@ -1,4 +1,4 @@
-# Postman Guide - Fireside Chat Assistant API
+# Postman Guide - Podcast Assistant API
 
 ## Quick Setup
 

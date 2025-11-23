@@ -2,11 +2,11 @@
 
 ## Basic Information
 
-**Name**: Alethea. 
-**Role**: Managing Director  
-**Organisation**: Financial Institution. 
-**Context**: Conducts senior leader interviews at quarterly townhalls, including recent CEO interview about new strategy. 
-**Key Stakeholder Status**: Project sponsor
+**Name**: Alethea.  
+**Role**: Managing Director   
+**Organisation**: Financial Institution.  
+**Context**: Conducts senior leader interviews at quarterly townhalls, including recent CEO interview about new strategy.  
+**Key Stakeholder Status**: Project sponsor 
 
 ## Interview History
 

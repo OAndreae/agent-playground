@@ -1,32 +1,32 @@
-# Fireside Chat Assistant: PR-FAQ
+# Podcast Assistant: PR-FAQ
 
 ## Press Release
 
-**Fireside Chat Assistant Launches: AI-Powered Podcast Interview Research in Minutes, Not Hours**
+**Podcast Assistant Launches: AI-Powered Podcast Interview Research in Minutes, Not Hours**
 
 *Revolutionary AI Research Tool Transforms Podcast Preparation, Enabling Hosts to Focus on Authentic Conversations Rather Than Manual Research*
 
-Today, we're excited to announce the launch of **Fireside Chat Assistant**, an intelligent platform that automatically researches podcast guests and generates comprehensive interview preparation materials. Podcast hosts spend countless hours researching speakers, hunting for background information, and crafting interview questions. Fireside Chat Assistant eliminates this burden entirely, delivering professionally researched talking points, tailored interview questions, and cited sourcesall in real-time.
+Today, we're excited to announce the launch of **Podcast Assistant**, an intelligent platform that automatically researches podcast guests and generates comprehensive interview preparation materials. Podcast hosts spend countless hours researching speakers, hunting for background information, and crafting interview questions. Podcast Assistant eliminates this burden entirely, delivering professionally researched talking points, tailored interview questions, and cited sourcesall in real-time.
 
-Fireside Chat Assistant analyses guest backgrounds, considers your podcast's specific audience, and generates a structured interview prep report within minutes. The platform uses advanced AI reasoning and real-time web research to surface relevant insights, key accomplishments, and audience-aligned talking points. Hosts can now spend less time in Google searches and more time creating meaningful, authentic conversations.
+Podcast Assistant analyses guest backgrounds, considers your podcast's specific audience, and generates a structured interview prep report within minutes. The platform uses advanced AI reasoning and real-time web research to surface relevant insights, key accomplishments, and audience-aligned talking points. Hosts can now spend less time in Google searches and more time creating meaningful, authentic conversations.
 
-The platform is designed for podcast creators of all sizesfrom solo producers to established networkswho want to deliver better guest interviews without sacrificing production speed. By automating research and preparation, Fireside Chat Assistant enables hosts to focus on what they do best: engaging in authentic dialogue with interesting guests.
+The platform is designed for podcast creators of all sizesfrom solo producers to established networkswho want to deliver better guest interviews without sacrificing production speed. By automating research and preparation, Podcast Assistant enables hosts to focus on what they do best: engaging in authentic dialogue with interesting guests.
 
-Fireside Chat Assistant is available today through our web interface, with streaming API integration available for podcast networks and production companies.
+Podcast Assistant is available today through our web interface, with streaming API integration available for podcast networks and production companies.
 
 ---
 
 ## Frequently Asked Questions
 
-### What Problem Does Fireside Chat Assistant Solve?
+### What Problem Does Podcast Assistant Solve?
 
 **Q: Why do podcast hosts need this?**
 
-A: Podcast interview preparation is incredibly time-consuming. Hosts must research each guest's background, find relevant accomplishments, understand their recent work, and craft thoughtful questions that resonate with their audience. This research process often takes 2-4 hours per guest, consuming production time and delaying content creation. Fireside Chat Assistant automates this entire workflow, delivering research-backed preparation materials in minutes.
+A: Podcast interview preparation is incredibly time-consuming. Hosts must research each guest's background, find relevant accomplishments, understand their recent work, and craft thoughtful questions that resonate with their audience. This research process often takes 2-4 hours per guest, consuming production time and delaying content creation. Podcast Assistant automates this entire workflow, delivering research-backed preparation materials in minutes.
 
 ---
 
-### How Does Fireside Chat Assistant Work?
+### How Does Podcast Assistant Work?
 
 **Q: Can you walk me through how the platform works?**
 
@@ -57,11 +57,11 @@ A: The entire process typically takes 1-3 minutes, depending on the availability
 
 **Q: How accurate is the AI-generated research? Can I trust the sources?**
 
-A: Fireside Chat Assistant cites all sources with direct links, allowing you to verify information independently. The platform uses advanced AI reasoning to synthesise information from multiple reputable sources, reducing the risk of misinformation. However, as with any AI tool, we recommend spot-checking critical facts before your interviewparticularly claims about recent events or specific data points. The platform excels at identifying key themes, accomplishments, and context, but human review is always prudent.
+A: Podcast Assistant cites all sources with direct links, allowing you to verify information independently. The platform uses advanced AI reasoning to synthesise information from multiple reputable sources, reducing the risk of misinformation. However, as with any AI tool, we recommend spot-checking critical facts before your interviewparticularly claims about recent events or specific data points. The platform excels at identifying key themes, accomplishments, and context, but human review is always prudent.
 
 **Q: What if there's limited public information about my guest?**
 
-A: Fireside Chat Assistant performs best when public information about the guest is readily available (academics, entrepreneurs, published authors, public figures). If your guest has minimal online presence, the platform will work with available information but may produce more limited results. In these cases, we recommend supplementing the AI-generated notes with direct conversation with the guest about their background.
+A: Podcast Assistant performs best when public information about the guest is readily available (academics, entrepreneurs, published authors, public figures). If your guest has minimal online presence, the platform will work with available information but may produce more limited results. In these cases, we recommend supplementing the AI-generated notes with direct conversation with the guest about their background.
 
 ---
 
@@ -81,7 +81,7 @@ A: Absolutely. Your audience profile lives in the platform, so you can update it
 
 **Q: How does this fit into my existing podcast production workflow?**
 
-A: Fireside Chat Assistant is designed to be lightweight and flexible. You can use the web interface for ad-hoc research, or integrate the streaming API directly into your production tools. The output is available in markdown format, making it easy to copy into your production notes, scripts, or content management system.
+A: Podcast Assistant is designed to be lightweight and flexible. You can use the web interface for ad-hoc research, or integrate the streaming API directly into your production tools. The output is available in markdown format, making it easy to copy into your production notes, scripts, or content management system.
 
 **Q: Can I export or share the preparation notes?**
 
@@ -103,9 +103,9 @@ A: Yes. Audience profile data is encrypted and stored securely. You maintain ful
 
 ### Competitive Advantages
 
-**Q: What makes Fireside Chat Assistant different from manual research or other tools?**
+**Q: What makes Podcast Assistant different from manual research or other tools?**
 
-A: Unlike manual research, which is time-consuming and incomplete, Fireside Chat Assistant:
+A: Unlike manual research, which is time-consuming and incomplete, Podcast Assistant:
 
 - **Saves hours per guest** - Delivers research in minutes, not hours.
 - **Audience-aware** - Tailors questions and talking points to your specific listeners, not generic research.
@@ -113,13 +113,13 @@ A: Unlike manual research, which is time-consuming and incomplete, Fireside Chat
 - **Structured output** - Delivers organised talking points and questions ready to use, not raw information to sift through.
 - **Cited sources** - Every claim links back to a source you can verify.
 
-Other tools may offer research aggregation but lack the AI reasoning to synthesise information and tailor it to your audience. Fireside Chat Assistant combines advanced AI with audience-specific customisation to deliver truly useful preparation materials.
+Other tools may offer research aggregation but lack the AI reasoning to synthesise information and tailor it to your audience. Podcast Assistant combines advanced AI with audience-specific customisation to deliver truly useful preparation materials.
 
 ---
 
 ### Limitations and Future Direction
 
-**Q: What are the current limitations of Fireside Chat Assistant?**
+**Q: What are the current limitations of Podcast Assistant?**
 
 A: A few things to keep in mind:
 
@@ -143,9 +143,9 @@ A: We're excited about several future directions:
 
 ### Getting Started
 
-**Q: How do I access Fireside Chat Assistant?**
+**Q: How do I access Podcast Assistant?**
 
-A: Fireside Chat Assistant is available today at [platform URL]. Simply sign up, create your podcast profile, and start researching guests immediately. The first few research sessions are free, allowing you to experience the platform with zero commitment.
+A: Podcast Assistant is available today at [platform URL]. Simply sign up, create your podcast profile, and start researching guests immediately. The first few research sessions are free, allowing you to experience the platform with zero commitment.
 
 **Q: Is there a free trial?**
 
@@ -163,7 +163,7 @@ A: Absolutely. We provide a streaming API for podcast networks and production co
 
 ### Success Metrics
 
-**Q: How will you measure success for Fireside Chat Assistant?**
+**Q: How will you measure success for Podcast Assistant?**
 
 A: We're tracking several key metrics:
 
@@ -177,11 +177,11 @@ A: We're tracking several key metrics:
 
 ### Why Now?
 
-**Q: Why launch Fireside Chat Assistant now?**
+**Q: Why launch Podcast Assistant now?**
 
-A: The podcast industry is explodingmillions of creators are launching shows, but podcast quality often suffers due to time constraints. Simultaneously, advances in AI reasoning and real-time web research have made it possible to automate research at a quality level that serves professional creators. The combination of growing creator demand and matured AI capabilities makes this the perfect moment to launch Fireside Chat Assistant.
+A: The podcast industry is explodingmillions of creators are launching shows, but podcast quality often suffers due to time constraints. Simultaneously, advances in AI reasoning and real-time web research have made it possible to automate research at a quality level that serves professional creators. The combination of growing creator demand and matured AI capabilities makes this the perfect moment to launch Podcast Assistant.
 
-Additionally, podcast audiences increasingly expect informed, researched, and thoughtful interviews. Creators who prepare well stand out. Fireside Chat Assistant democratises access to deep preparation, allowing independent creators to compete with well-resourced networks on preparation quality.
+Additionally, podcast audiences increasingly expect informed, researched, and thoughtful interviews. Creators who prepare well stand out. Podcast Assistant democratises access to deep preparation, allowing independent creators to compete with well-resourced networks on preparation quality.
 
 ---
 
@@ -189,11 +189,11 @@ Additionally, podcast audiences increasingly expect informed, researched, and th
 
 **Q: What's the bigger impact we hope to achieve?**
 
-A: We believe Fireside Chat Assistant will:
+A: We believe Podcast Assistant will:
 
 - **Elevate podcast discourse** - Better-prepared interviews lead to more authentic, informed, and engaging conversations.
 - **Democratise podcast quality** - Solo creators can now compete on preparation quality with established networks.
 - **Accelerate podcast production** - Creators can produce more content without sacrificing preparation quality.
 - **Deepen guest-host conversations** - By automating research, hosts can focus on authentic dialogue rather than information gathering, leading to richer interviews.
 
-Ultimately, Fireside Chat Assistant is about creating space for more meaningful conversations. By removing the research burden, we enable hosts to focus on what makes podcasting special: the human connection between host and guest.
+Ultimately, Podcast Assistant is about creating space for more meaningful conversations. By removing the research burden, we enable hosts to focus on what makes podcasting special: the human connection between host and guest.

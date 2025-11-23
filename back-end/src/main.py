@@ -62,7 +62,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 
 app = FastAPI(
-    title="Fireside Chat Assistant API",
+    title="Podcast Assistant API",
     version="0.1.0",
     description="API for podcast research agent powered by Google ADK",
     lifespan=lifespan,
@@ -86,7 +86,7 @@ async def root() -> JSONResponse:
     """Root endpoint."""
     return JSONResponse(
         {
-            "message": "Fireside Chat Assistant API",
+            "message": "Podcast Assistant API",
             "version": "0.1.0",
             "docs": "/docs",
         }

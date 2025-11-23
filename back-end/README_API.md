@@ -1,4 +1,4 @@
-# Fireside Chat Assistant API
+# Podcast Assistant API
 
 A FastAPI service that serves a Google ADK agent for podcast research. The agent researches guest speakers and generates interview preparation materials.
 

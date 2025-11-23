@@ -4,11 +4,11 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useFiresideChatStore } from '@/store/store';
+import { usePodcastStore } from '@/store/store';
 import { useStreaming } from '@/lib/use-streaming';
 
 export function PreparationNotesDisplay() {
-  const { streamResponse, isGenerating, setIsGenerating, setPreparationNotes, setError } = useFiresideChatStore();
+  const { streamResponse, isGenerating, setIsGenerating, setPreparationNotes, setError } = usePodcastStore();
   const { data, isStreaming, error: streamError, isComplete } = useStreaming(streamResponse);
 
   useEffect(() => {

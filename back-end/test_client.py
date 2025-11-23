@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test client for the Fireside Chat Assistant API.
+Test client for the Podcast Assistant API.
 Demonstrates end-to-end usage of creating sessions and streaming responses.
 """
 
@@ -157,7 +157,7 @@ def check_health() -> dict:
 
 def main():
     """Main test flow."""
-    print("🎙️  Fireside Chat Assistant - Test Client\n")
+    print("🎙️  Podcast Assistant - Test Client\n")
 
     # Check health
     print("Checking API health...")

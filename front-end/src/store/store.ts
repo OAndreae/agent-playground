@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-interface FiresideChatState {
+interface PodcastState {
   // Form fields
   guestName: string;
   guestBio: string;
@@ -17,7 +17,10 @@ interface FiresideChatState {
   preparationNotes: string;
 
   // Actions
-  updateField: (field: 'guestName' | 'guestBio' | 'audienceProfile', value: string) => void;
+  updateField: (
+    field: "guestName" | "guestBio" | "audienceProfile",
+    value: string,
+  ) => void;
   clearForm: () => void;
   setIsGenerating: (isGenerating: boolean) => void;
   setError: (error: string | null) => void;
@@ -25,15 +28,15 @@ interface FiresideChatState {
   setPreparationNotes: (notes: string) => void;
 }
 
-export const useFiresideChatStore = create<FiresideChatState>((set) => ({
+export const usePodcastStore = create<PodcastState>((set) => ({
   // Initial state
-  guestName: '',
-  guestBio: '',
-  audienceProfile: '',
+  guestName: "",
+  guestBio: "",
+  audienceProfile: "",
   isGenerating: false,
   error: null,
   streamResponse: null,
-  preparationNotes: '',
+  preparationNotes: "",
 
   // Actions
   updateField: (field, value) =>
@@ -45,13 +48,13 @@ export const useFiresideChatStore = create<FiresideChatState>((set) => ({
 
   clearForm: () =>
     set({
-      guestName: '',
-      guestBio: '',
-      audienceProfile: '',
+      guestName: "",
+      guestBio: "",
+      audienceProfile: "",
       isGenerating: false,
       error: null,
       streamResponse: null,
-      preparationNotes: '',
+      preparationNotes: "",
     }),
 
   setIsGenerating: (isGenerating) =>

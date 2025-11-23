@@ -1,4 +1,4 @@
-# Fireside Chat Assistant – Features
+# Podcast Assistant – Features
 
 AI-powered interview preparation that transforms hours of research into minutes of actionable insights.
 

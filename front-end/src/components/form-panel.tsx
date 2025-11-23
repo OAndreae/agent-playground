@@ -5,10 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useFiresideChatStore } from '@/store/store';
+import { usePodcastStore } from '@/store/store';
 import { ApiError, startResearch } from '@/lib/api-client';
 
-export function FiresideChatForm() {
+export function PodcastForm() {
   const {
     guestName,
     guestBio,
@@ -20,7 +20,7 @@ export function FiresideChatForm() {
     setIsGenerating: setGenerating,
     setError,
     setStreamResponse,
-  } = useFiresideChatStore();
+  } = usePodcastStore();
 
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
