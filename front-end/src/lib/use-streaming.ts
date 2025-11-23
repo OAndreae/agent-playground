@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react';
-import { streamSession } from './api-client';
-import { StreamEventSchema } from './api-types';
-import type { StreamEvent} from './api-types';
 
 interface UseStreamingResult {
   data: string;
@@ -10,14 +7,14 @@ interface UseStreamingResult {
   isComplete: boolean;
 }
 
-export function useStreaming(sessionId: string | null): UseStreamingResult {
+export function useStreaming(response: Response | null): UseStreamingResult {
   const [data, setData] = useState<string>('');
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isComplete, setIsComplete] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!sessionId) {
+    if (!response) {
       return;
     }
 
@@ -26,54 +23,43 @@ export function useStreaming(sessionId: string | null): UseStreamingResult {
     setData('');
     setIsComplete(false);
 
-    const eventSource = streamSession(sessionId);
-
-    eventSource.onmessage = (event) => {
+    const processStream = async () => {
       try {
-        const parsed = JSON.parse(event.data);
-        const validated = StreamEventSchema.safeParse(parsed);
-
-        if (!validated.success) {
-          console.error('Invalid stream event format:', validated.error);
-          return;
+        const reader = response.body?.getReader();
+        if (!reader) {
+          throw new Error('Response body is not readable');
         }
 
-        const streamEvent: StreamEvent = validated.data;
+        const decoder = new TextDecoder();
 
-        if (streamEvent.error) {
-          setError(streamEvent.error);
-          setIsStreaming(false);
-          eventSource.close();
-          return;
+        while (true) {
+          const { done, value } = await reader.read();
+
+          if (done) {
+            setIsStreaming(false);
+            setIsComplete(true);
+            break;
+          }
+
+          const chunk = decoder.decode(value, { stream: true });
+          setData((prev) => prev + chunk);
         }
-
-        if (streamEvent.data && streamEvent.mime_type === 'text/plain') {
-          setData((prev) => prev + streamEvent.data);
-        }
-
-        if (streamEvent.turn_complete) {
-          setIsStreaming(false);
-          setIsComplete(true);
-          eventSource.close();
-        }
-
       } catch (err) {
-        console.error('Error parsing stream event:', err);
-        setError('Failed to parse stream event');
+        console.error('Error reading stream:', err);
+        setError(
+          err instanceof Error ? err.message : 'Failed to read stream',
+        );
+        setIsStreaming(false);
       }
     };
 
-    eventSource.onerror = (err) => {
-      console.error('EventSource error:', err);
-      setError('Connection error during streaming');
-      setIsStreaming(false);
-      eventSource.close();
-    };
+    processStream();
 
     return () => {
-      eventSource.close();
+      // Cancel the stream if the component unmounts
+      response.body?.cancel();
     };
-  }, [sessionId]);
+  }, [response]);
 
   return {
     data,

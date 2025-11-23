@@ -1,13 +1,7 @@
-import {
-  CreateSessionResponseSchema,
-  ErrorResponseSchema,
-} from './api-types';
-import type {
-  CreateSessionRequest,
-  CreateSessionResponse
-} from './api-types';
+import { ErrorResponseSchema } from './api-types';
+import type { ResearchRequest } from './api-types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8002';
 
 class ApiError extends Error {
   constructor(
@@ -20,11 +14,9 @@ class ApiError extends Error {
   }
 }
 
-export async function createSession(
-  request: CreateSessionRequest,
-): Promise<CreateSessionResponse> {
+export async function startResearch(request: ResearchRequest): Promise<Response> {
   try {
-    const response = await fetch(`${API_BASE_URL}/sessions`, {
+    const response = await fetch(`${API_BASE_URL}/research`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -37,24 +29,13 @@ export async function createSession(
       const parsed = ErrorResponseSchema.safeParse(errorData);
 
       throw new ApiError(
-        'Failed to create session',
+        'Failed to start research',
         response.status,
         parsed.success ? parsed.data.detail : 'Unknown error',
       );
     }
 
-    const data = await response.json();
-    const parsed = CreateSessionResponseSchema.safeParse(data);
-
-    if (!parsed.success) {
-      throw new ApiError(
-        'Invalid response format from server',
-        500,
-        parsed.error.message,
-      );
-    }
-
-    return parsed.data;
+    return response;
   } catch (error) {
     if (error instanceof ApiError) {
       throw error;
@@ -66,11 +47,6 @@ export async function createSession(
       error instanceof Error ? error.message : 'Unknown network error',
     );
   }
-}
-
-export function streamSession(sessionId: string): EventSource {
-  const url = `${API_BASE_URL}/sessions/${sessionId}/stream`;
-  return new EventSource(url);
 }
 
 export { ApiError };
