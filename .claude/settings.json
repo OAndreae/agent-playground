@@ -6,7 +6,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [[ \"$FILE_PATH\" == *.py ]]; then uv run ruff format \"$FILE_PATH\"; fi"
+            "command": "if [[ \"$file_path\" == *.py ]]; then uv run ruff format \"$file_path\"; fi"
+          },
+          {
+            "type": "command",
+            "command": "if [[ \"$file_path\" =~ /api/.*\\.ts$ ]]; then deno fmt \"$file_path\" && deno lint \"$file_path\"; fi"
           }
         ]
       }

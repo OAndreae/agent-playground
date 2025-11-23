@@ -6,9 +6,10 @@ import type { ResearchService } from './service.ts';
 const createMockService = (): ResearchService => {
   return {
     researchGuest: () => ({
-      toTextStreamResponse: () => new Response('Mock research results', {
-        headers: { 'Content-Type': 'text/plain' },
-      }),
+      toTextStreamResponse: () =>
+        new Response('Mock research results', {
+          headers: { 'Content-Type': 'text/plain' },
+        }),
     } as ReturnType<ResearchService['researchGuest']>),
   };
 };
