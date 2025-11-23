@@ -10,7 +10,7 @@
           },
           {
             "type": "command",
-            "command": "if [[ \"$file_path\" =~ /api/.*\\.ts$ ]]; then deno fmt \"$file_path\" && deno lint \"$file_path\"; fi"
+            "command": "if [[ \"$file_path\" =~ /api/.*\\.ts$ ]]; then deno fmt \"$file_path\" && deno lint --fix \"$file_path\"; fi"
           }
         ]
       }
