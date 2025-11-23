@@ -20,11 +20,17 @@
     "singleQuote": true,
     "semiColons": true,
     "trailingCommas": "onlyMultiLine",
+    "include": [
+      "api/**/*.ts"
+    ],
     "exclude": [
       "*.md"
     ]
   },
   "lint": {
+    "include": [
+      "api/**/*.ts"
+    ],
     "rules": {
       "tags": [
         "recommended"
