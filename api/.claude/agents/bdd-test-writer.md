@@ -38,8 +38,9 @@ You must adhere to these principles:
 
 - Import expect from "jsr:@std/expect" for assertions
 - Import testing utilities from "jsr:@std/testing" when needed
-- Write comprehensive test coverage including: happy paths, edge cases, error
+- Write sufficient test coverage including: happy paths, edge cases, error
   conditions, boundary values, and invalid inputs
+- Write sufficient tests to cover all functionality, but avoid redundant tests
 - Keep each test focused on a single behaviour or assertion
 - Use meaningful variable names that enhance test readability
 - Avoid test interdependence - each test should run independently
