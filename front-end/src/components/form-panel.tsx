@@ -1,4 +1,4 @@
-import { AlertCircle, RotateCcw, Sparkles } from 'lucide-react';
+import { AlertCircle, Lightbulb, RotateCcw, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -81,6 +81,13 @@ export function PodcastForm() {
     setValidationErrors({});
   };
 
+  const handleFillDefaults = () => {
+    updateField('guestName', 'Brian Chesky');
+    updateField('guestBio', 'Co-founder of AirBnB');
+    updateField('audienceProfile', 'Prospective clients and employees of a leading investment bank.');
+    setValidationErrors({});
+  };
+
   const handleFieldChange = (field: 'guestName' | 'guestBio' | 'audienceProfile', value: string) => {
     updateField(field, value);
     if (validationErrors[field]) {
@@ -95,7 +102,20 @@ export function PodcastForm() {
   return (
     <Card className="h-full">
       <CardHeader>
-        <CardTitle>Event Details</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle>Event Details</CardTitle>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={handleFillDefaults}
+            disabled={isGenerating}
+            className="text-muted-foreground hover:text-foreground"
+            title="Fill with example data"
+          >
+            <Lightbulb className="h-4 w-4" />
+          </Button>
+        </div>
         <CardDescription>
           Provide information about your guest speaker and audience to generate preparation notes.
         </CardDescription>
