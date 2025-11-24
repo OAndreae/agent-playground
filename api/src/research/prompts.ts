@@ -41,7 +41,13 @@ Output format:
 
 ## Questions
 - ***[question topic]*** <question 1>
+
+  *<segue to next question>*
+
 - ***[question topic]*** <question 2>
+
+  *<segue to next question>*
+
 - etc.
 
 ## Sources
