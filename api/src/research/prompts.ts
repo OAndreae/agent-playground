@@ -46,7 +46,7 @@ Key talking points you can weave into the interview:
 - etc.
 
 ## Sources
-- <source 1 name (description)>: <markdown link to source 1>
-- <source 2 name (description)>: <markdown link to source 2>
+- [<source 1 name>](<link to source 1>)
+- [<source 2 name>](<link to source 2>)
 - etc.
 `;

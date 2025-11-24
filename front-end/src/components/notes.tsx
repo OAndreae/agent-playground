@@ -55,13 +55,13 @@ export function PreparationNotesDisplay() {
                   <p className="text-sm font-medium">Generating preparation notes...</p>
                 </div>
                 {data && (
-                  <div className="prose prose-sm max-w-none dark:prose-invert">
+                  <div className="prose prose-sm w-full min-w-0 max-w-full wrap-break-word dark:prose-invert">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="prose prose-sm max-w-none dark:prose-invert">
+              <div className="prose prose-sm w-full min-w-0 max-w-full wrap-break-word dark:prose-invert">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
               </div>
             )}
