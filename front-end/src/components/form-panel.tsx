@@ -152,7 +152,7 @@ export function PodcastForm() {
               value={guestBio}
               onChange={(e) => handleFieldChange('guestBio', e.target.value)}
               disabled={isGenerating}
-              rows={5}
+              rows={3}
               className={validationErrors.guestBio ? 'border-destructive' : ''}
             />
             {validationErrors.guestBio && (
@@ -173,7 +173,7 @@ export function PodcastForm() {
               value={audienceProfile}
               onChange={(e) => handleFieldChange('audienceProfile', e.target.value)}
               disabled={isGenerating}
-              rows={5}
+              rows={3}
               className={validationErrors.audienceProfile ? 'border-destructive' : ''}
             />
             {validationErrors.audienceProfile && (
