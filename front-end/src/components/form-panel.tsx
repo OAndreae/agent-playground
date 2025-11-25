@@ -100,7 +100,7 @@ export function PodcastForm() {
   };
 
   return (
-    <Card className="py-0 shadow-sm flex flex-col">
+    <Card className="py-0 shadow-sm flex flex-col sticky top-6 z-10">
       <div className="px-5 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <h2 className="font-semibold text-slate-900 text-sm tracking-wide uppercase">
           Guest Information
