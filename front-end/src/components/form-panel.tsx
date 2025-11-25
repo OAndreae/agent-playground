@@ -222,7 +222,7 @@ export function PodcastForm() {
         <div className="flex gap-3">
           <AlertCircle className="h-4 w-4 text-slate-500 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-slate-600 leading-relaxed">
-            Research briefs are generated using publicly available information. Content should be reviewed for compliance before external distribution.
+            Research briefs are generated using publicly available information. Content should be reviewed thoroughly before use.
           </p>
         </div>
       </div>
