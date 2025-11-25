@@ -31,7 +31,7 @@ Output a detailed report for the moderator, including suggested questions for th
 Refer to the guest speaker by their first name.
 Include citations for all information sources used.
 Tailor your questions so that they will be relevant and interesting to the audience: ${targetAudience}.
-Refrain from double-barreling or combining questions; each question should focus on a distinct single topic.
+Refrain from double-barreling or combining questions; each question should be clear and concise. They should focus on a distinct single topic.
 Ensure that they relate to the guest speaker's background and expertise. Do not directly reference the audience (${targetAudience}) in your questions.
 Include segues between questions to help the host transition smoothly.
 Use markdown links for all sources. Don't display raw URLs.
