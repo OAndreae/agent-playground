@@ -2,7 +2,7 @@ import { AlertCircle, FileText, Loader2 } from 'lucide-react';
 import { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { usePodcastStore } from '@/store/store';
 import { useStreaming } from '@/lib/use-streaming';
@@ -31,17 +31,17 @@ export function PreparationNotesDisplay() {
   }, [isComplete, setIsGenerating]);
 
   return (
-      <div className="h-full flex flex-col">
+      <Card className="h-full flex flex-col shadow-sm py-0">
         {!data && !isGenerating && !isStreaming && !streamError ? (
-          <div className="h-full rounded-lg border bg-muted/30 p-6 flex flex-col items-center justify-center text-muted-foreground">
+          <div className="h-full px-6 flex flex-col items-center justify-center text-muted-foreground">
             <FileText className="h-12 w-12 mb-4 opacity-40" />
-            <p className="text-sm font-medium">Your preparation notes will appear here</p>
+            <p className="text-sm font-medium">No research brief generated</p>
             <p className="text-xs mt-2 text-center max-w-sm">
-              Fill out the form on the left and click "Generate Preparation Notes" to get started
+              Enter guest details in the form and click "Generate Research Brief" to get started
             </p>
           </div>
         ) : (
-          <ScrollArea className="h-full rounded-lg border bg-muted/30 p-6">
+          <ScrollArea className="h-full rounded-lg p-6">
             {streamError ? (
               <div className="flex flex-col items-center justify-center h-full text-destructive">
                 <AlertCircle className="h-12 w-12 mb-4" />
@@ -55,18 +55,18 @@ export function PreparationNotesDisplay() {
                   <p className="text-sm font-medium">Generating preparation notes...</p>
                 </div>
                 {data && (
-                  <div className="prose prose-sm w-full min-w-0 max-w-full wrap-break-word dark:prose-invert">
+                  <div className="prose prose-sm prose-slate w-full min-w-0 max-w-full wrap-break-word dark:prose-invert">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="prose prose-sm w-full min-w-0 max-w-full wrap-break-word dark:prose-invert">
+              <div className="prose prose-sm prose-slate w-full min-w-0 max-w-full wrap-break-word dark:prose-invert">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
               </div>
             )}
           </ScrollArea>
         )}
-      </div>
+      </Card>
   );
 }

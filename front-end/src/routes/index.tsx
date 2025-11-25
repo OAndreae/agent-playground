@@ -8,12 +8,12 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
   return (
-    <div className="container mx-auto px-6 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-9rem)]">
-        <div className="lg:col-span-1 h-full overflow-hidden">
+    <div className="max-w-[1400px] mx-auto p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 min-h-[calc(100vh-9rem)]">
+        <div className="lg:col-span-3">
           <PodcastForm />
         </div>
-        <div className="lg:col-span-2 h-full overflow-hidden">
+        <div className="lg:col-span-9 h-full overflow-hidden">
           <PreparationNotesDisplay />
         </div>
       </div>

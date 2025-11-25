@@ -1,18 +1,16 @@
-import { MessageCircle } from 'lucide-react';
-import { Separator } from '@/components/ui/separator';
-
 export function Header() {
   return (
-    <header className="border-b">
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center gap-3">
-          <MessageCircle className="h-6 w-6 text-primary" />
-          <h1 className="text-2xl font-semibold tracking-tight">
-            Podcast Preparation
-          </h1>
+    <header className="bg-slate-900 text-white border-b border-slate-800">
+      <div className="max-w-[1400px] mx-auto px-8">
+        <div className="flex items-center h-16">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
+              <div className="w-4 h-4 border-2 border-slate-900 rounded-sm" />
+            </div>
+            <span className="font-semibold tracking-tight">PODCAST PREP</span>
+          </div>
         </div>
       </div>
-      <Separator />
     </header>
   );
 }
