@@ -82,8 +82,8 @@ export function PodcastForm() {
   };
 
   const handleFillDefaults = () => {
-    updateField('guestName', 'Brian Chesky');
-    updateField('guestBio', 'Co-founder of AirBnB');
+    updateField('guestName', 'Dario Amodei');
+    updateField('guestBio', 'Co-founder and CEO of Anthropic');
     updateField('audienceProfile', 'Prospective clients and employees of a leading investment bank.');
     setValidationErrors({});
   };
