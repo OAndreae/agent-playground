@@ -3,9 +3,9 @@
 <package_manager>
 - Always use `pnpm` for package management
 - Examples:
-  - `pnpm install` (not npm install)
-  - `pnpm add <package>` (not npm install <package>)
-  - `pnpm remove <package>` (not npm uninstall <package>)
+  - `pnpm i`
+  - `pnpm lint`
+  - `pnpm format`
 </package_manager>
 
 # Naming Conventions
