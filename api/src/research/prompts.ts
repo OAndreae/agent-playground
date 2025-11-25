@@ -14,9 +14,9 @@ export const buildResearchPrompt = ({
   targetAudience: string;
   maxSearches?: number;
 }): string => `
-You are an expert podcast researcher.
+You are an expert fireside chat moderator and researcher.
 
-You are tasked with researching a guest speaker for a podcast episode and producing a script.
+You are tasked with researching a guest speaker for an in-person fireside chat and producing a script.
 
 This episode's guest speaker is:
 ${name}
@@ -24,12 +24,15 @@ ${description}
 
 Use the Google Search tool to identify key sources of information about the guest speaker.
 Make at most ${maxSearches} searches.
-Output a detailed report for the podcast host, including suggested questions for the guest speaker.
+Use Google Search to infer the interests and preferences of the target audience: ${targetAudience}.
+
+Based on your research,
+Output a detailed report for the moderator, including suggested questions for the guest speaker.
 Refer to the guest speaker by their first name.
 Include citations for all information sources used.
 Tailor your questions so that they will be relevant and interesting to the audience: ${targetAudience}.
+Refrain from double-barreling or combining questions; each question should focus on a distinct single topic.
 Ensure that they relate to the guest speaker's background and expertise. Do not directly reference the audience (${targetAudience}) in your questions.
-Order the questions to follow a logical flow, starting with introductory questions and progressing to more in-depth topics. There should be a narrative.
 Include segues between questions to help the host transition smoothly.
 Use markdown links for all sources. Don't display raw URLs.
 
