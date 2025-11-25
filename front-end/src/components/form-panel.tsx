@@ -1,7 +1,7 @@
 import { AlertCircle, Lightbulb, RotateCcw, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -82,8 +82,8 @@ export function PodcastForm() {
   };
 
   const handleFillDefaults = () => {
-    updateField('guestName', 'Brian Chesky');
-    updateField('guestBio', 'Co-founder of AirBnB');
+    updateField('guestName', 'Dario Amodei');
+    updateField('guestBio', 'Co-founder and CEO of Anthropic');
     updateField('audienceProfile', 'Prospective clients and employees of a leading investment bank.');
     setValidationErrors({});
   };
@@ -100,30 +100,27 @@ export function PodcastForm() {
   };
 
   return (
-    <Card className="h-full">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Event Details</CardTitle>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={handleFillDefaults}
-            disabled={isGenerating}
-            className="text-muted-foreground hover:text-foreground"
-            title="Fill with example data"
-          >
-            <Lightbulb className="h-4 w-4" />
-          </Button>
-        </div>
-        <CardDescription>
-          Provide information about your guest speaker and audience to generate preparation notes.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
+    <Card className="py-0 shadow-sm flex flex-col sticky top-6 z-10">
+      <div className="px-5 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <h2 className="font-semibold text-slate-900 text-sm tracking-wide uppercase">
+          Guest Information
+        </h2>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={handleFillDefaults}
+          disabled={isGenerating}
+          className="text-muted-foreground hover:text-foreground"
+          title="Fill with example data"
+        >
+          <Lightbulb className="h-4 w-4" />
+        </Button>
+      </div>
+      <CardContent className="flex-1 px-5 py-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="guestName">
+            <Label htmlFor="guestName" className="block text-xs font-medium text-slate-500 uppercase tracking-wide">
               Guest Speaker Name <span className="text-destructive">*</span>
             </Label>
             <Input
@@ -143,12 +140,12 @@ export function PodcastForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="guestBio">
-              Guest Description <span className="text-destructive">*</span>
+            <Label htmlFor="guestBio" className="block text-xs font-medium text-slate-500 uppercase tracking-wide">
+              Role / Description <span className="text-destructive">*</span>
             </Label>
             <Textarea
               id="guestBio"
-              placeholder="Provide a brief description to help identify the guest speaker (background, expertise, notable achievements, etc.)"
+              placeholder="Title, company, relevant context..."
               value={guestBio}
               onChange={(e) => handleFieldChange('guestBio', e.target.value)}
               disabled={isGenerating}
@@ -164,12 +161,12 @@ export function PodcastForm() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="audienceProfile">
+            <Label htmlFor="audienceProfile" className="block text-xs font-medium text-slate-500 uppercase tracking-wide">
               Audience Profile <span className="text-destructive">*</span>
             </Label>
             <Textarea
               id="audienceProfile"
-              placeholder="Describe your audience (demographics, interests, knowledge level, expectations, etc.)"
+              placeholder="Demographics, interests, knowledge level, expectations..."
               value={audienceProfile}
               onChange={(e) => handleFieldChange('audienceProfile', e.target.value)}
               disabled={isGenerating}
@@ -191,21 +188,21 @@ export function PodcastForm() {
             </div>
           )}
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex flex-col gap-3 pt-2">
             <Button
               type="submit"
               disabled={isGenerating}
-              className="flex-1"
+              className="flex-1 bg-slate-900 hover:bg-slate-800"
             >
               {isGenerating ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent mr-2" />
-                  Generating...
+                  Processing...
                 </>
               ) : (
                 <>
                   <Sparkles className="h-4 w-4 mr-2" />
-                  Generate Preparation Notes
+                  Generate Research Brief
                 </>
               )}
             </Button>
@@ -216,11 +213,19 @@ export function PodcastForm() {
               disabled={isGenerating}
             >
               <RotateCcw className="h-4 w-4 mr-2" />
-              Clear
+              Clear Form
             </Button>
           </div>
         </form>
       </CardContent>
+      <div className="px-5 py-4 bg-slate-50 border-t border-slate-100">
+        <div className="flex gap-3">
+          <AlertCircle className="h-4 w-4 text-slate-500 flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Research briefs are generated using publicly available information. Content should be reviewed thoroughly before use.
+          </p>
+        </div>
+      </div>
     </Card>
   );
 }

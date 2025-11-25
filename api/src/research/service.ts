@@ -17,7 +17,7 @@ import { buildResearchPrompt } from './prompts.ts';
  * ```
  */
 export const createResearchService = (
-  model: LanguageModel = google('gemini-2.5-flash'),
+  model: LanguageModel = google('gemini-2.5-pro'),
   searchTool: Tool = google.tools.googleSearch({}),
 ) => {
   return {
